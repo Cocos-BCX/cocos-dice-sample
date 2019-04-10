@@ -389,9 +389,8 @@ export default {
         password: self.gel("#login_pwd").value,
         callback: function(res) {
           if (res.code == 1) {
-            var username = self.gel("#login_username").value;
             self.$store.commit("UPDATE_ACCOUNT",{name:res.account_name});
-            self.account.name = username;
+            self.account.name = res.account_name;
             self.getCOCOS();
             self.showLogin = false;
             self.$message({
