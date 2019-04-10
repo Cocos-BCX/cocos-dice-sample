@@ -478,7 +478,7 @@ export default {
 
 <style scoped>
 .game {
-  background: url("../assets/bg.png") top left repeat;
+  background: #555;
   background-size: contain;
   padding: 60px 0;
 }
