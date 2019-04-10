@@ -13,7 +13,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "element-ui": "^2.4.6",
-    "eosjs": "^16.0.6",
     "normalize.css": "^8.0.0",
     "vue": "^2.5.17",
     "vuex": "^3.0.1"
