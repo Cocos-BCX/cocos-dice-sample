@@ -25,7 +25,7 @@
           <td>{{order.action_trace.act.data.result.random_roll}}</td>
           <!-- <td
             class="payout"
-          >{{order.action_trace.act.data.result.payout !== '0.0000 EOS' && order.action_trace.act.data.result.payout || ''}}</td>-->
+          >{{order.action_trace.act.data.result.payout !== '0.0000 COCOS' && order.action_trace.act.data.result.payout || ''}}</td>-->
         </tr>
       </tbody>
     </table>

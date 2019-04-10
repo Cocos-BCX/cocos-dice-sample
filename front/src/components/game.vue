@@ -6,7 +6,7 @@
           <label>BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">
-              <img class="eos-logo" :src="cocosbcxLogo">
+              <img class="cocos-logo" :src="cocosbcxLogo">
               <input @change="checkBetamount" v-model="cocos">
             </div>
             <ul class="amount-rate">
@@ -19,7 +19,7 @@
         <div>
           <label>PAYOUT ON WIN</label>
           <div class="bet-cell">
-            <img class="eos-logo" :src="cocosbcxLogo">
+            <img class="cocos-logo" :src="cocosbcxLogo">
             <span>{{payWin}}</span>
           </div>
         </div>
@@ -42,13 +42,13 @@
       </div>
       <footer class="game-footer">
         <div class="currentCOCOS-container">
-          <img class="eos-lg" :src="cocosbcxLogo">
+          <img class="cocos-lg" :src="cocosbcxLogo">
           <span
             :class="{
               'animateUp': this.showUpAnimation, 
               'animateDown': this.showDownAnimation
             }"
-            class="eos-animation"
+            class="cocos-animation"
           >{{animationTxt}}</span>
           <span>{{Number(currentCOCOS).toFixed(4)}}</span>
         </div>
@@ -68,31 +68,19 @@
     <el-dialog width="30%" :visible.sync="showAbout">
       <p slot="title">How To Play</p>
       <ol>
-        <li>
-          1. Make sure you have an EOS account. For more information on how to create one,
-          <a
-            href="//medium.com/dapppub/create-your-own-eos-account-easily-using-the-non-service-fee-dapp-signupeoseos-b15c5347f2fc"
-            target="_blank"
-          >click here</a>.
-        </li>
+        <li>1. Make sure you have an COCOS account. For more information on how to create one,</li>
         <li>
           2. If you haven’t already, download and install
           <a
-            href="//get-scatter.com/"
+            href="https://chrome.google.com/webstore/detail/cocospay/mgjkjldekfadimcmllpaeafokhdjjeig"
             target="_blank"
-          >Scatter</a>, an EOS wallet that facilitates interaction between users and dApps.
+          >CocosPay</a>, an Cocos wallet that facilitates interaction between users and dApps.
         </li>
-        <li>3. Set your BET AMOUNT. This is the amount of EOS you will be wagering.</li>
+        <li>3. Set your BET AMOUNT. This is the amount of Cocos you will be wagering.</li>
         <li>4. Adjust the slider to change your chance of winning.</li>
         <li>5. Click ROLL DICE to place your bet.</li>
         <li>6. If your number is lower than your ROLL UNDER TO WIN number, you win!</li>
-        <li>
-          7. If you get a notice that your transaction failed, please check that you have enough CPU & bandwidth to make the transaction! Please use
-          <a
-            href="//eostoolkit.io/home"
-            target="_blank"
-          >EOSToolkit</a> to make any changes to your account!
-        </li>
+        <li>7. If you get a notice that your transaction failed, please check that you have enough CPU & bandwidth to make the transaction! Please use to make any changes to your account!</li>
       </ol>
     </el-dialog>
     <el-dialog width="30%" :visible.sync="showLogin">
@@ -109,7 +97,7 @@
     </el-dialog>
 
     <el-dialog :visible.sync="showSocial">
-      <p slot="title">Join the EOSBet Community</p>
+      <p slot="title">Join the COCOS Community</p>
       <ul class="social-links">
         <li @click="navigate('twitter')">
           <font-awesome-icon :icon="['fab', 'twitter']"/>
@@ -169,12 +157,6 @@ export default {
     };
   },
   methods: {
-    //   getAccountBalance() {
-    //    let params = {"code":"eosio.token","account":"dicebet"}
-    //     let res = await httpRequest.postRequest("http://127.0.0.1:8888/v1/chain/get_currency_balance", params)
-
-    // },
-
     getCOCOS() {
       if (!this.account.name) {
         this.currentCOCOS = 0;
@@ -191,14 +173,6 @@ export default {
           self.currentCOCOS = res.data.COCOS;
         }
       });
-
-      // return bcx.getAccount(this.account.name).then(({ core_liquid_balance }) => {
-      //   alert(core_liquid_balance)
-
-      //   this.currentCOCOS = Number(core_liquid_balance.replace(/\sEOS/, ''));
-      //   this.getCurBalance();
-
-      // });
     },
 
     getPool() {
@@ -254,7 +228,7 @@ export default {
       // if (this.cocos > maxAmount) {
       //   this.$notify({
       //     title: 'Bet Failed',
-      //     message: 'Bet Amount should not be more than ' + maxAmount.toFixed(4) + ' EOS',
+      //     message: 'Bet Amount should not be more than ' + maxAmount.toFixed(4) + ' COCOS',
       //     duration: 2000,
       //     showClose: false,
       //     type: 'error'
@@ -265,7 +239,7 @@ export default {
       // if (this.cocos < minBetAmount) {
       //   this.$notify({
       //     title: 'Bet Failed',
-      //     message: 'Bet Amount should be more than ' + minBetAmount.toFixed(4) + ' EOS',
+      //     message: 'Bet Amount should be more than ' + minBetAmount.toFixed(4) + ' COCOS',
       //     duration: 2000,
       //     showClose: false,
       //     type: 'error'
@@ -273,14 +247,13 @@ export default {
       //   return;
       // }
       const body = new FormData();
-      //const eos = scatter.eos(network, Eos, {})
       const options = {
         authorization: `${this.account.name}@${this.account.authority}`,
         broadcast: true,
         sign: true
       };
 
-      this.showEOSAnimation = true;
+      this.showCOCOSAnimation = true;
       this.$message.info("Waiting for node to confirm transfer...");
       let referrer = "fairdicegame";
       body.append("roll_under", this.rollUnder);
@@ -305,10 +278,10 @@ export default {
       //   method: 'POST',
       //   body
       // }).then(({ expiration_timestamp, seed, signature }) => {
-      //   eos.transfer({
+      //   COCOS.transfer({
       //     from: this.account.name,
       //     to: 'fairdicegame',
-      //     quantity: Number(this.cocos).toFixed(4) + ' EOS',
+      //     quantity: Number(this.cocos).toFixed(4) + ' COCOS',
       //     memo: `${this.rollUnder}-${seed}-${this.getClientSeed()}-${expiration_timestamp}-${referrer}-${signature}`
       //   }).then(() => {
       //     this.getCOCOS();
@@ -353,7 +326,7 @@ export default {
           }
         } = result;
 
-        if (payout === "0.0000 EOS") {
+        if (payout === "0.0000 COCOS") {
           this.showDownAnimation = true;
           this.animationTxt = amount;
         } else {
@@ -390,7 +363,7 @@ export default {
         callback: function(res) {
           if (res.code == 1) {
             var username = self.gel("#login_username").value;
-            self.$store.commit("UPDATE_ACCOUNT",{name:res.account_name});
+            self.$store.commit("UPDATE_ACCOUNT", { name: res.account_name });
             self.account.name = username;
             self.getCOCOS();
             self.showLogin = false;
@@ -405,7 +378,7 @@ export default {
       // scatter.getIdentity({
       //   accounts: [network]
       // }).then(() => {
-      //   const account = scatter.identity.accounts.find(account => account.blockchain === 'eos');
+      //   const account = scatter.identity.accounts.find(account => account.blockchain === 'COCOS');
       //   if (!account) return;
       //   this.$store.commit('UPDATE_ACCOUNT', account);
       // }).catch(e => {
@@ -570,7 +543,7 @@ export default {
   padding-left: 15px;
 }
 
-.input-group .eos-logo {
+.input-group .cocos-logo {
   position: absolute;
   left: 10px;
   top: 12.5px;
@@ -627,7 +600,7 @@ export default {
   font-weight: 600;
 }
 
-.bet-cell .eos-logo {
+.bet-cell .cocos-logo {
   position: absolute;
   left: 10px;
   top: 12.5px;
@@ -662,11 +635,11 @@ export default {
   flex: 1;
 }
 
-.eos-logo {
+.cocos-logo {
   height: 22px;
 }
 
-.eos-lg {
+.cocos-lg {
   width: 22px;
   margin-right: 5px;
   vertical-align: middle;
@@ -741,19 +714,19 @@ export default {
   position: relative;
 }
 
-.eos-animation {
+.cocos-animation {
   opacity: 0;
 
   position: absolute;
 }
 
-.eos-animation.animateUp {
+.cocos-animation.animateUp {
   animation: fadeOutUp 3s;
   color: #02f292;
   text-shadow: 0 0 5px #02f292;
 }
 
-.eos-animation.animateDown {
+.cocos-animation.animateDown {
   animation: fadeOutDown 1s;
   color: #cd4263;
   text-shadow: 0 0 5px #cd4263;
