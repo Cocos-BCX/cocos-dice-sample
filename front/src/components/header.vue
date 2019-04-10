@@ -9,12 +9,12 @@
         <li>
           <a @click="showAbout" href="JavaScript:;">HOW TO PLAY</a>
         </li>
-        <li v-if="!account">
+        <li v-if="!account.name">
           <a @click="showLogin" href="JavaScript:;">LoginAccount</a>
         </li>
-        <li v-if="account">{{account}}</li>
+        <li v-if="account">{{account.name}}</li>
         <li>
-          <a @click="login" v-if="!account" href="JavaScript:;">LOGIN</a>
+          <a @click="login" v-if="!account.name" href="JavaScript:;">LOGIN</a>
           <div class="account-cell" v-else href="JavaScript:;">
             <span>{{account.name}}</span>
             <font-awesome-icon class="icon-logout" @click="logout" icon="sign-out-alt"/>
