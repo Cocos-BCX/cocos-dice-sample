@@ -1,53 +1,54 @@
-
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>Fair Dice</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124180755-1"></script>
-    <script src="bcx.min.js?v=7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'UA-124180755-1');
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>Fair Dice</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124180755-1"></script>
+  <script src="bcx.min.js?v=7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-      var _configParams={
-        // default_ws_node:"ws://47.93.62.96:8020",
-        ws_node_list:[
-            {url:"ws://47.93.62.96:8020",name:"COCOS - China - Beijing"}
-        ],
-        networks:[
-          {
-            core_asset:"COCOS",
-            chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
-          }
-        ], 
-        // faucet_url:"http://47.93.62.96:3000",
-        faucet_url:"http://47.93.62.96:4000",
-        auto_reconnect:true,
-        worker:false,
-        real_sub:true,
-        check_cached_nodes_data:true
-          //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
-      };
-      bcx=new BCX(_configParams);
-      //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
-      bcx.init({
-          real_sub:true
-      }).then(res=>{
-          console.info("init res",res);
-      });
-    </script>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but dice doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-124180755-1');
+
+    var _configParams = {
+      // default_ws_node:"ws://47.93.62.96:8020",
+      ws_node_list: [{
+        url: "ws://47.93.62.96:8020",
+        name: "COCOS - China - Beijing"
+      }],
+      networks: [{
+        core_asset: "COCOS",
+        chain_id: "9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137"
+      }],
+      // faucet_url:"http://47.93.62.96:3000",
+      faucet_url: "http://47.93.62.96:4000",
+      auto_reconnect: true,
+      worker: false,
+      real_sub: true,
+      check_cached_nodes_data: true
+      //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
+    };
+    bcx = new BCX(_configParams);
+    //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
+    bcx.init({
+      real_sub: true
+    }).then(res => {
+      console.info("init res", res);
+    });
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>
