@@ -78,9 +78,9 @@
         </li>
         <li>3. Set your BET AMOUNT. This is the amount of Cocos you will be wagering.</li>
         <li>4. Adjust the slider to change your chance of winning.</li>
-        <li>5. Click ROLL DICE to place your bet.</li>
-        <li>6. If your number is lower than your ROLL UNDER TO WIN number, you win!</li>
-        <li>7. If you get a notice that your transaction failed, please check that you have enough CPU & bandwidth to make the transaction! Please use to make any changes to your account!</li>
+        <!-- <li>5. Click ROLL DICE to place your bet.</li> -->
+        <li>5. If your number is lower than your ROLL UNDER TO WIN number, you win!</li>
+        <!-- <li>7. If you get a notice that your transaction failed, please check that you have enough CPU & bandwidth to make the transaction! Please use to make any changes to your account!</li> -->
       </ol>
     </el-dialog>
     <el-dialog width="30%" :visible.sync="showLogin">
