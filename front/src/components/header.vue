@@ -10,7 +10,7 @@
           <a @click="showAbout" href="JavaScript:;">HOW TO PLAY</a>
         </li>
         <li v-if="!account.name">
-          <a @click="showLogin" href="JavaScript:;">Login</a>
+          <a @click="showLogin" href="JavaScript:;">LOGIN</a>
         </li>
         <li v-if="account">{{account.name}}</li>
         <!-- <li>

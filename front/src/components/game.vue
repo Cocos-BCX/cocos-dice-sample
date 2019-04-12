@@ -130,7 +130,7 @@ export default {
     eventHub.$on("SHOW_LOGIN", () => {
       if (window.BcxWeb && window.BcxWeb.BCX) {
         this.login();
-      } else this.showLogin = true;
+      } else this.showAbout = true;
     });
     eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
     this.getCOCOS();
@@ -357,24 +357,25 @@ export default {
         return true;
       }
 
-      bcx.passwordLogin({
-        account: self.gel("#login_username").value,
-        password: self.gel("#login_pwd").value,
-        callback: function(res) {
-          if (res.code == 1) {
-            var username = self.gel("#login_username").value;
-            self.$store.commit("UPDATE_ACCOUNT", { name: res.account_name });
-            self.account.name = username;
-            self.getCOCOS();
-            self.showLogin = false;
-            self.$message({
-              message: "Login Success",
-              type: "success"
-            });
-            //gel(".current_account").innerText=bcx.getAccountInfo().account_name;
-          }
-        }
-      });
+      // bcx.passwordLogin({
+      //   account: self.gel("#login_username").value,
+      //   password: self.gel("#login_pwd").value,
+      //   callback: function(res) {
+      //     if (res.code == 1) {
+      //       var username = self.gel("#login_username").value;
+      //       self.$store.commit("UPDATE_ACCOUNT", { name: res.account_name });
+      //       self.account.name = username;
+      //       self.getCOCOS();
+      //       self.showLogin = false;
+      //       self.$message({
+      //         message: "Login Success",
+      //         type: "success"
+      //       });
+      //       //gel(".current_account").innerText=bcx.getAccountInfo().account_name;
+      //     }
+      //   }
+      // });
+
       // scatter.getIdentity({
       //   accounts: [network]
       // }).then(() => {
