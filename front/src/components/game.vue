@@ -53,10 +53,10 @@
           <span>{{Number(currentCOCOS).toFixed(4)}}</span>
         </div>
         <el-button v-if="account.name" @click="doAction" class="btn-action">{{actionTxt}}</el-button>
-        <!-- <button 
+        <!-- <button
           v-else
           @click="login"
-        class="btn-action">LOGIN</button>-->
+        class="btn-action">LOGIN</button> -->
         <div class="bet-balance">
           <img class="token-logo" :src="tokenLogo">
           <span>0.0000</span>
