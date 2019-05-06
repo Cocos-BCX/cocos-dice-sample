@@ -131,7 +131,17 @@ export default {
     eventHub.$on("ROLLUNDER_CHANGE", rollUnder => (this.rollUnder = rollUnder));
     eventHub.$on("SHOW_ABOUT", () => (this.showAbout = true));
     eventHub.$on("SHOW_LOGIN", () => {
-      if (window.BcxWeb && window.BcxWeb.BCX) {
+      Cocosjs.plugins( new CocosBCX() );
+      let isShow = Cocosjs.cocos.connect('My-App').then(connected => {
+        if (!connected) return false;
+        const cocos = Cocosjs.cocos;
+        bcx = cocos.cocosBcx(bcx)
+        this.account.name = cocos.identity.accounts
+        this.getCOCOS();
+
+        return true
+      })
+      if (isShow) {
         this.login();
       } else this.showAbout = true;
     });
@@ -352,10 +362,9 @@ export default {
     },
 
     login() {
+      // pc wallet Transfer test
       Cocosjs.plugins( new CocosBCX() );
-
       Cocosjs.cocos.connect('My-App').then(connected => {
-        // If the user does not have Scatter or it is Locked or Closed this will return false;
         if(!connected) return false;
 
         const cocos = Cocosjs.cocos;
@@ -372,13 +381,14 @@ export default {
         });
       });
 
-      var self = this;
-      if (window.BcxWeb && window.BcxWeb.BCX) {
-        bcx = window.BcxWeb.BCX;
-        self.account.name = window.BcxWeb.address;
-        self.getCOCOS();
-        return true;
-      }
+      // chrome extension test
+      // var self = this;
+      // if (window.BcxWeb && window.BcxWeb.BCX) {
+      //   bcx = window.BcxWeb.BCX;
+      //   self.account.name = window.BcxWeb.address;
+      //   self.getCOCOS();
+      //   return true;
+      // }
 
       // bcx.passwordLogin({
       //   account: self.gel("#login_username").value,
