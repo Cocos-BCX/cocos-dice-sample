@@ -117,6 +117,9 @@
 </template>
 
 <script>
+import Cocosjs from 'cocosjs-core';
+import CocosBCX from 'cocosjs-plugin-bcx';
+// import BCX from 'bcxjs-api';
 import cocosbcxLogo from "@/assets/cocosbcx.png";
 import tokenLogo from "@/assets/bet-token.png";
 import eventHub from "@/utils/event";
@@ -349,6 +352,26 @@ export default {
     },
 
     login() {
+      Cocosjs.plugins( new CocosBCX() );
+
+      Cocosjs.cocos.connect('My-App').then(connected => {
+        // If the user does not have Scatter or it is Locked or Closed this will return false;
+        if(!connected) return false;
+
+        const cocos = Cocosjs.cocos;
+        console.log(cocos)
+        let cocosBcx = cocos.cocosBcx(bcx)
+        let result = cocosBcx.transferAsset({
+          type: "signature",
+          payload: {
+            toAccount: "cocos000",
+            amount: "0.2",
+            memo: "",
+            assetId: "COCOS"
+          }
+        });
+      });
+
       var self = this;
       if (window.BcxWeb && window.BcxWeb.BCX) {
         bcx = window.BcxWeb.BCX;
