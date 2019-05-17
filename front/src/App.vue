@@ -13,17 +13,17 @@ const task = new Promise(r => {
 });
 
 export default {
-  mounted() {
-    task.then(() => {
-      this.$store.commit("UPDATE_ACCOUNT", account);
-    });
-  },
-
   components: {
     diceHeader: require("@/components/header").default,
     diceGame: require("@/components/game").default,
     diceOrders: require("@/components/orders").default
   }
+  // methods: {
+  //   ...mapActions(["CONNECT_COCOS"])
+  // },
+  // async created() {
+  //   this.CONNECT_COCOS();
+  // }
 };
 </script>
 

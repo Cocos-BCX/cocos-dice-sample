@@ -33,16 +33,16 @@
       auto_reconnect: true,
       worker: false,
       real_sub: true,
-      check_cached_nodes_data: true
-      //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
+      check_cached_nodes_data: true,
+      // app_keys: ["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
     };
     bcx = new BCX(_configParams);
     //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
-    bcx.init({
-      real_sub: true
-    }).then(res => {
-      console.info("init res", res);
-    });
+    // bcx.init({
+    //   real_sub: true
+    // }).then(res => {
+    //   console.info("init res", res);
+    // });
   </script>
 </head>
 

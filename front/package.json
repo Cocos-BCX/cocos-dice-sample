@@ -24,8 +24,8 @@
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "bcxjs-api": "^1.3.6",
-    "cocosjs-core": "^0.1.1",
-    "cocosjs-plugin-bcx": "^0.1.0",
+    "cocosjs-core": "^0.1.12",
+    "cocosjs-plugin-bcx": "^0.1.6",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
