@@ -134,11 +134,12 @@ export default {
     eventHub.$on("SHOW_LOGIN", async () => {
       await this.CONNECT_COCOS();
     });
-    await this.CONNECT_COCOS();
+    setTimeout(() => {
+      this.CONNECT_COCOS();
+    }, 0);
     // this.login();
     eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
     this.getCOCOS();
-    this.getPool();
   },
   data() {
     return {
@@ -170,7 +171,6 @@ export default {
         this.currentCOCOS = 0;
         return;
       }
-      console.log(bcx.account_name);
       bcx
         .queryAccountBalances({
           assetId_or_symbol: "1.3.0",
@@ -178,18 +178,6 @@ export default {
         })
         .then(res => {
           this.currentCOCOS = res.data.COCOS;
-        });
-    },
-
-    getPool() {
-      var self = this;
-      bcx
-        .queryAccountBalances({
-          assetId_or_symbol: "1.3.0",
-          account: "fishwarter" // contractor owner
-        })
-        .then(res => {
-          self.currentCOCOS = res.data.COCOS;
         });
     },
 
@@ -229,14 +217,16 @@ export default {
     },
 
     transfer() {
-      bcx.transferAsset({
-        toAccount: "cocos000",
-        amount: "0.2",
-        memo: "",
-        assetId: "COCOS"
-      }).then(res =>{
-        console.log(res)
-      });
+      bcx
+        .transferAsset({
+          toAccount: "cocos000",
+          amount: "0.2",
+          memo: "",
+          assetId: "COCOS"
+        })
+        .then(res => {
+          console.log(res);
+        });
     },
 
     doAction() {
@@ -283,46 +273,18 @@ export default {
 
       //nameOrId=>合约名字或ID
       var self = this;
-      bcx.callContractFunction({
-        nameOrId: "contract.dicegame",
-        functionName: "bet",
-        valueList: [self.rollUnder, self.cocos],
-        runTime: 10,
-        onlyGetFee: false,
-        callback: function(res) {
-          console.info("callContractFunction res", res);
+      bcx
+        .callContractFunction({
+          nameOrId: "contract.dicegame",
+          functionName: "bet",
+          valueList: [self.rollUnder, self.cocos],
+          runTime: 10,
+          onlyGetFee: false
+        })
+        .then(res => {
+          console.log(res);
           self.getCOCOS();
-        }
-      });
-      // .then(res => {
-      //   console.log(res);
-      // });
-
-      // fetch('//dice.dapp.pub/dice/', {
-      //   method: 'POST',
-      //   body
-      // }).then(({ expiration_timestamp, seed, signature }) => {
-      //   COCOS.transfer({
-      //     from: bcx.account_name,
-      //     to: 'fairdicegame',
-      //     quantity: Number(this.cocos).toFixed(4) + ' COCOS',
-      //     memo: `${this.rollUnder}-${seed}-${this.getClientSeed()}-${expiration_timestamp}-${referrer}-${signature}`
-      //   }).then(() => {
-      //     this.getCOCOS();
-      //     this.fetchResult(seed);
-      //     this.animating = true;
-
-      //     this.$notify({
-      //       title: 'Bet success',
-      //       message: 'Waiting for bet result',
-      //       duration: 2000,
-      //       showClose: false,
-      //       type: 'info'
-      //     });
-      //   }).catch(e => {
-      //     this.$notify.error(e.message || JSON.parse(e).error.details[0].message);
-      //   });
-      // });
+        });
     },
 
     fetchResult(hash) {

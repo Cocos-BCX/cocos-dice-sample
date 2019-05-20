@@ -26,10 +26,9 @@ export default new Vuex.Store({
     }) {
       try {
         if (window.BcxWeb) {
-          bcx = window.BcxWeb && window.BcxWeb.BCX ? window.BcxWeb.BCX : window.BcxWeb
-          console.log(bcx.account_name)
+          bcx = window.BcxWeb
           commit('UPDATE_ACCOUNT', {
-            name: bcx.account_name
+            name: window.BcxWeb.account_name
           })
           return
         }

@@ -8,9 +8,6 @@
 
 <script>
 /* global scatter */
-const task = new Promise(r => {
-  document.addEventListener("scatterLoaded", r);
-});
 
 export default {
   components: {
