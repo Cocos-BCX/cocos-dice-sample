@@ -9,7 +9,6 @@ export default new Vuex.Store({
     account: {},
     BCXWeb: {}
   },
-
   mutations: {
     UPDATE_ACCOUNT(state, account) {
       state.account = account
@@ -18,7 +17,6 @@ export default new Vuex.Store({
       state.BCXWeb = cocos
     }
   },
-
   actions: {
     async CONNECT_COCOS({
       state,
@@ -36,10 +34,15 @@ export default new Vuex.Store({
         await Cocosjs.cocos.connect('My-App').then(connected => {
           if (!connected) return false
           const cocos = Cocosjs.cocos
-          commit('UPDATE_ACCOUNT', {
-            name: cocos.account_name
-          })
-          bcx = cocos.cocosBcx(bcx)
+          bcx.account_name = cocos.account_name;
+          bcx = cocos.cocosBcx(bcx);
+          bcx.getAccountInfo().then(res => {
+            commit('UPDATE_ACCOUNT', {
+              name: res.account_name
+            })
+            console.log(res);
+
+          });
         })
       } catch (e) {
         console.log(e)

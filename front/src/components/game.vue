@@ -3,7 +3,7 @@
     <div class="form">
       <div class="form-group">
         <div>
-          <label @click="transfer">BET AMOUNT</label>
+          <label>BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">
               <img class="cocos-logo" :src="cocosbcxLogo">
@@ -115,7 +115,6 @@
     </el-dialog>
   </section>
 </template>
-
 <script>
 import Cocosjs from "cocosjs-core";
 import CocosBCX from "cocosjs-plugin-bcx";
@@ -136,10 +135,10 @@ export default {
     });
     setTimeout(() => {
       this.CONNECT_COCOS();
+      this.getCOCOS();
     }, 0);
     // this.login();
     eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
-    this.getCOCOS();
   },
   data() {
     return {
@@ -171,12 +170,14 @@ export default {
         this.currentCOCOS = 0;
         return;
       }
+      console.log(bcx.account_name);
       bcx
         .queryAccountBalances({
-          assetId_or_symbol: "1.3.0",
+          unit: "",
           account: bcx.account_name
         })
         .then(res => {
+          console.log(res);
           this.currentCOCOS = res.data.COCOS;
         });
     },
@@ -216,18 +217,18 @@ export default {
         .digest("hex");
     },
 
-    transfer() {
-      bcx
-        .transferAsset({
-          toAccount: "cocos000",
-          amount: "0.2",
-          memo: "",
-          assetId: "COCOS"
-        })
-        .then(res => {
-          console.log(res);
-        });
-    },
+    // transfer() {
+    //   bcx
+    //     .transferAsset({
+    //       toAccount: "test2",
+    //       amount: "2",
+    //       memo: "",
+    //       assetId: "COCOS"
+    //     })
+    //     .then(res => {
+    //       console.log(res);
+    //     });
+    // },
 
     doAction() {
       let maxAmount = this.maxBetAmount();
