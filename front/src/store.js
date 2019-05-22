@@ -34,14 +34,13 @@ export default new Vuex.Store({
         await Cocosjs.cocos.connect('My-App').then(connected => {
           if (!connected) return false
           const cocos = Cocosjs.cocos
-          bcx.account_name = cocos.account_name;
           bcx = cocos.cocosBcx(bcx);
           bcx.getAccountInfo().then(res => {
             commit('UPDATE_ACCOUNT', {
               name: res.account_name
             })
+            bcx.account_name = res.account_name
             console.log(res);
-
           });
         })
       } catch (e) {
