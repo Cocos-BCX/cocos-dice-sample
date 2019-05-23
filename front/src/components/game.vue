@@ -170,14 +170,12 @@ export default {
         this.currentCOCOS = 0;
         return;
       }
-      console.log(bcx.account_name);
       bcx
         .queryAccountBalances({
           unit: "",
           account: bcx.account_name
         })
         .then(res => {
-          console.log(res);
           this.currentCOCOS = res.data.COCOS;
         });
     },
@@ -283,7 +281,23 @@ export default {
           onlyGetFee: false
         })
         .then(res => {
-          console.log(res);
+          if (res.code !== 1) {
+            this.$notify({
+              title: "Bet Failed",
+              message: res.message,
+              duration: 2000,
+              showClose: false,
+              type: "error"
+            });
+          } else {
+            this.$notify({
+              title: "Success",
+              message: "trade success",
+              duration: 2000,
+              showClose: false,
+              type: "success"
+            });
+          }
           self.getCOCOS();
         });
     },

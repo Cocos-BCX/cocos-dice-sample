@@ -40,12 +40,9 @@ export default new Vuex.Store({
               name: res.account_name
             })
             bcx.account_name = res.account_name
-            console.log(res);
           });
         })
-      } catch (e) {
-        console.log(e)
-      }
+      } catch (e) {}
     }
   }
 })

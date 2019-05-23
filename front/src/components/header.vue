@@ -32,16 +32,9 @@ import diceLogo from "@/assets/dice.svg";
 
 export default {
   methods: {
-    login() {
-      console.log("sss");
-    },
+    login() {},
 
-    logout() {
-      // scatter.forgetIdentity().then(() => {
-      //   this.$message.success("User logout success");
-      //   this.$store.commit("UPDATE_ACCOUNT", {});
-      // });
-    },
+    logout() {},
 
     showAbout() {
       eventHub.$emit("SHOW_ABOUT");
