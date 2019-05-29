@@ -16,7 +16,7 @@
             </ul>
           </div>
         </div>
-        <div>
+        <div class="payout">
           <label>PAYOUT ON WIN</label>
           <div class="bet-cell">
             <img class="cocos-logo" :src="cocosbcxLogo">
@@ -42,7 +42,7 @@
       </div>
       <footer class="game-footer">
         <div class="currentCOCOS-container">
-          <img class="cocos-lg" :src="cocosbcxLogo">
+          <img class="cocos-logo" :src="cocosbcxLogo">
           <span
             :class="{
               'animateUp': this.showUpAnimation, 
@@ -450,6 +450,10 @@ export default {
   font-weight: 600;
 }
 
+.payout {
+  margin-top: 0;
+}
+
 .amount-rate li:not(:last-child) {
   border-right: 2px solid #2f2f2f;
 }
@@ -593,19 +597,21 @@ export default {
   background-color: #0191ee;
   border-color: #0191ee;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 5px 2px;
   line-height: 1.5;
-  border-radius: 0.3rem;
+  border-radius: 3px;
   color: #fff;
   flex: 1;
 }
 
 .cocos-logo {
   height: 22px;
+  width: 26px;
 }
 
 .cocos-lg {
   width: 22px;
+  width: 26px;
   margin-right: 5px;
   vertical-align: middle;
 }
@@ -656,7 +662,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 30px 0 30px;
+  padding: 0.3rem 0.3rem 0 0.3rem;
   font-size: 1.2em;
 }
 
@@ -718,6 +724,302 @@ export default {
     opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .game {
+    background: #555;
+    background-size: contain;
+    padding: 0.6rem 0;
+  }
+
+  .form {
+    width: 100%;
+    border-radius: 0.05rem;
+    font-size: 0.18rem;
+    background-color: #4b4848;
+    margin: 0 auto 0.2rem auto;
+    padding: 0.1rem 0.3rem;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-group > div:last-child {
+    width: 5rem;
+  }
+
+  .amount-rate {
+    display: flex;
+    align-items: center;
+  }
+
+  .amount-rate li {
+    color: #9b9fae;
+    font-size: 0.6em;
+    font-weight: 600;
+  }
+
+  .amount-rate li:not(:last-child) {
+    border-right: 2px solid #2f2f2f;
+  }
+
+  .form-group {
+    margin-bottom: 0.2rem;
+  }
+
+  .form-group label {
+    color: #9b9fae;
+    font-weight: 600;
+    font-size: 0.6em;
+    margin-bottom: 0.75em;
+    display: block;
+  }
+
+  .form-group input {
+    text-align: center;
+    border: none;
+    padding: 0.1rem 0.2rem;
+    borde-radius: 0.3em;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    font-size: 0.18rem;
+    outline: none;
+    background-color: #4b4848;
+    width: 3rem;
+    color: #fff;
+  }
+
+  .input-amount-group {
+    display: flex;
+    align-items: center;
+    background-color: #3f3e3e;
+    padding: 2px;
+    border-radius: 0.3em;
+    margin-right: 30px;
+    height: 47px;
+    width: 6rem;
+    position: relative;
+  }
+
+  .input-amount-group ul li {
+    cursor: pointer;
+    padding: 8px 15px;
+  }
+
+  .input-amount-group ul li:hover {
+    background-color: #0000003f;
+  }
+
+  .input-group {
+    flex: 1;
+  }
+
+  .input-group input {
+    padding-left: 15px;
+  }
+
+  .input-group .cocos-logo {
+    position: absolute;
+    left: 10px;
+    top: 12.5px;
+  }
+
+  .info-container {
+    background-color: #3f3e3e;
+    padding: 0.12rem;
+    width: 6rem;
+  }
+
+  .info-container ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .info-container ul > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* flex: 1; */
+  }
+
+  .info-container ul > li:not(:last-child) {
+    border-right: 2px solid #2f2f2f;
+  }
+
+  .info-container ul > li > label {
+    color: #9b9fae;
+    font-weight: 600;
+    font-size: 12px !important;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .info-container ul > li > span {
+    color: #fff;
+    font-size: 0.12rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .bet-cell {
+    background-color: #3f3e3e;
+    border-radius: 0.3em;
+    height: 47px;
+    width: 6rem;
+    line-height: 47px;
+    text-align: center;
+    position: relative;
+  }
+
+  .bet-cell > span {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .bet-cell .cocos-logo {
+    position: absolute;
+    left: 10px;
+    top: 12.5px;
+  }
+
+  .game-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .game-footer > div {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .btn-action {
+    outline: none;
+    letter-spacing: 3px;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: #0191ee;
+    border-color: #0191ee;
+    cursor: pointer;
+    padding: 0.01rem 0.1rem;
+    line-height: 1.5;
+    border-radius: 0.03rem;
+    color: #fff;
+    flex: 1;
+  }
+  .currentCOCOS-container span {
+    line-height: 22px;
+  }
+  .payout {
+    margin-top: 0.3rem;
+  }
+  .cocos-logo {
+    height: 22px;
+    width: 26px;
+  }
+
+  .cocos-lg {
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .token-logo {
+    width: 22px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .game >>> .el-dialog {
+    background-color: #4a4848;
+  }
+
+  .game >>> .el-dialog__header {
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    color: #fff;
+    font-size: 1.25em;
+  }
+
+  .game >>> .el-dialog__body {
+    color: #fff;
+    padding-top: 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    font-size: 1em;
+  }
+
+  .game >>> .el-dialog__body li,
+  .game >>> .el-dialog__body p {
+    margin-bottom: 10px;
+  }
+
+  .game >>> .el-dialog__body a {
+    color: #0191ee;
+    text-decoration: none;
+  }
+
+  .game >>> .el-dialog__body a:hover {
+    text-decoration: underline;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 30px 0 30px;
+    font-size: 1.2em;
+  }
+
+  .social-links li {
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color ease 200ms;
+  }
+
+  .social-links li:hover {
+    background-color: #6c2ded;
+  }
+
+  .bet-balance {
+    visibility: hidden;
+  }
+
+  .currentCOCOS-container {
+    position: relative;
+    display: flex;
+  }
+
+  .cocos-animation {
+    opacity: 0;
+
+    position: absolute;
+  }
+
+  .cocos-animation.animateUp {
+    animation: fadeOutUp 3s;
+    color: #02f292;
+    text-shadow: 0 0 5px #02f292;
+  }
+
+  .cocos-animation.animateDown {
+    animation: fadeOutDown 1s;
+    color: #cd4263;
+    text-shadow: 0 0 5px #cd4263;
   }
 }
 </style>

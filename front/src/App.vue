@@ -2,7 +2,7 @@
   <main id="app">
     <dice-header/>
     <dice-game/>
-    <dice-orders/>
+    <!-- <dice-orders/> -->
   </main>
 </template>
 

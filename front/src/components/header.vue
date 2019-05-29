@@ -2,13 +2,13 @@
   <header class="header">
     <div>
       <img class="dice-logo" :src="diceLogo">
-      <a @click="showSocial" href="JavaScript:;">COMMUNITIY</a>
+      <a href="JavaScript:;">COMMUNITIY</a>
     </div>
     <nav>
       <ul>
-        <li>
+        <!-- <li>
           <a @click="showAbout" href="JavaScript:;">HOW TO PLAY</a>
-        </li>
+        </li>-->
         <li v-if="!account.name">
           <a @click="showLogin" href="JavaScript:;">LOGIN</a>
         </li>
@@ -114,6 +114,59 @@ export default {
   width: 40px;
   vertical-align: middle;
   margin-right: 30px;
+}
+@media screen and (max-width: 720px) {
+  .header {
+    width: 100%;
+    background-color: #3f3e3e;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    height: 0.76rem;
+    justify-content: space-between;
+    padding: 0 0.3rem;
+  }
+
+  .header ul {
+    display: flex;
+    align-items: center;
+  }
+
+  .header ul li {
+    margin-left: 0.3rem;
+  }
+
+  .header a {
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  .header .account-cell {
+    color: #fff;
+  }
+
+  .header .account-cell > span {
+    margin-right: 0.1rem;
+  }
+
+  .header a:hover {
+    text-shadow: 0 0 5px #fff;
+  }
+
+  .icon-logout {
+    cursor: pointer;
+  }
+
+  .dice-logo {
+    width: 0.4rem;
+    vertical-align: middle;
+    margin-right: 0.3rem;
+  }
 }
 </style>
 
