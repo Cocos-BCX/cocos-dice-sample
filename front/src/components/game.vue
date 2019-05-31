@@ -3,7 +3,7 @@
     <div class="form">
       <div class="form-group">
         <div>
-          <label>BET AMOUNT</label>
+          <label @click="transfer">BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">
               <img class="cocos-logo" :src="cocosbcxLogo">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="payout">
-          <label>PAYOUT ON WIN</label>
+          <label @click="logins">PAYOUT ON WIN</label>
           <div class="bet-cell">
             <img class="cocos-logo" :src="cocosbcxLogo">
             <span>{{payWin}}</span>
@@ -136,7 +136,8 @@ export default {
     setTimeout(() => {
       this.CONNECT_COCOS();
       this.getCOCOS();
-    }, 0);
+      console.log(window);
+    }, 100);
     // this.login();
     eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
   },
@@ -172,7 +173,7 @@ export default {
       }
       bcx
         .queryAccountBalances({
-          unit: "",
+          assetId: "COCOS",
           account: bcx.account_name
         })
         .then(res => {
@@ -215,18 +216,18 @@ export default {
         .digest("hex");
     },
 
-    // transfer() {
-    //   bcx
-    //     .transferAsset({
-    //       toAccount: "test2",
-    //       amount: "2",
-    //       memo: "",
-    //       assetId: "COCOS"
-    //     })
-    //     .then(res => {
-    //       console.log(res);
-    //     });
-    // },
+    transfer() {
+      bcx
+        .transferAsset({
+          toAccount: "test2",
+          amount: "2",
+          memo: "",
+          assetId: "COCOS"
+        })
+        .then(res => {
+          console.log(res);
+        });
+    },
 
     doAction() {
       let maxAmount = this.maxBetAmount();
@@ -347,6 +348,12 @@ export default {
 
     gel(selector) {
       return document.querySelector(selector);
+    },
+    logins() {
+      bcx.getAccountInfo().then(res => {
+        console.log("aaaa");
+        console.log(res);
+      });
     },
 
     login() {},

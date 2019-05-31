@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     account: {},
-    BCXWeb: {}
+    BCXWeb: {},
   },
   mutations: {
     UPDATE_ACCOUNT(state, account) {
@@ -15,7 +15,7 @@ export default new Vuex.Store({
     },
     SET_BCX(state, cocos) {
       state.BCXWeb = cocos
-    }
+    },
   },
   actions: {
     async CONNECT_COCOS({
@@ -26,7 +26,10 @@ export default new Vuex.Store({
         if (window.BcxWeb) {
           bcx = window.BcxWeb
           commit('UPDATE_ACCOUNT', {
-            name: window.BcxWeb.account_name
+            name: window.BcxWeb.account_name,
+          })
+          bcx.getAccountInfo().then(res => {
+            console.log(res)
           })
           return
         }
@@ -34,17 +37,17 @@ export default new Vuex.Store({
         await Cocosjs.cocos.connect('My-App').then(connected => {
           if (!connected) return false
           const cocos = Cocosjs.cocos
-          bcx = cocos.cocosBcx(bcx);
+          bcx = cocos.cocosBcx(bcx)
           bcx.getAccountInfo().then(res => {
             commit('UPDATE_ACCOUNT', {
-              name: res.account_name
+              name: res.account_name,
             })
             bcx.account_name = res.account_name
-          });
+          })
         })
       } catch (e) {}
-    }
-  }
+    },
+  },
 })
 
 // npm引入 npm install cocosjs - core cocosjs - plugin - bcx--registry = http: //39.105.4.131:8080/ -S

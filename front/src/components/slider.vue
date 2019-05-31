@@ -42,8 +42,6 @@ export default {
 
     this.left = left;
     this.slideWidth = offsetWidth;
-    console.log(this.slideWidth);
-    console.log(this.offsetX);
 
     document.addEventListener("mousemove", this.drag);
     document.addEventListener("mouseup", this.dragEnd);
