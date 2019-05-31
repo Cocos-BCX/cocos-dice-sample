@@ -172,10 +172,10 @@ export default {
       }
       bcx
         .queryAccountBalances({
+          assetId: "COCOS",
           account: this.account.name
         })
         .then(res => {
-          console.log(res);
           this.currentCOCOS = res.data.COCOS;
         });
     },
