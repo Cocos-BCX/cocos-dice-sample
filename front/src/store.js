@@ -29,7 +29,9 @@ export default new Vuex.Store({
             name: window.BcxWeb.account_name,
           })
           bcx.getAccountInfo().then(res => {
-            console.log(res)
+            commit('UPDATE_ACCOUNT', {
+              name: res.account_name,
+            })
           })
           return
         }

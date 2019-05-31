@@ -133,10 +133,9 @@ export default {
     eventHub.$on("SHOW_LOGIN", async () => {
       await this.CONNECT_COCOS();
     });
-    setTimeout(() => {
-      this.CONNECT_COCOS();
+    setTimeout(async () => {
+      await this.CONNECT_COCOS();
       this.getCOCOS();
-      console.log(window);
     }, 100);
     // this.login();
     eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
@@ -160,23 +159,23 @@ export default {
       showDownAnimation: false
     };
   },
-  // computed: {
-  //   ...mapState(["account"])
-  // },
+  computed: {
+    ...mapState(["account"])
+  },
   methods: {
     ...mapActions(["CONNECT_COCOS"]),
     ...mapMutations(["UPDATE_ACCOUNT"]),
     getCOCOS() {
-      if (!bcx.account_name) {
+      if (typeof this.account.name !== "string") {
         this.currentCOCOS = 0;
         return;
       }
       bcx
         .queryAccountBalances({
-          assetId: "COCOS",
-          account: bcx.account_name
+          account: this.account.name
         })
         .then(res => {
+          console.log(res);
           this.currentCOCOS = res.data.COCOS;
         });
     },
@@ -212,7 +211,7 @@ export default {
         Math.random() * Math.floor(Number.MAX_SAFE_INTEGER)
       );
       return createHash("sha1")
-        .update(bcx.account_name + Date.now() + randomNumber)
+        .update(this.account.name + Date.now() + randomNumber)
         .digest("hex");
     },
 
@@ -260,7 +259,7 @@ export default {
       }
       const body = new FormData();
       const options = {
-        authorization: `${bcx.account_name}@${this.account.authority}`,
+        authorization: `${this.account.name}@${this.account.name.authority}`,
         broadcast: true,
         sign: true
       };
@@ -278,7 +277,7 @@ export default {
           nameOrId: "contract.dicegame",
           functionName: "bet",
           valueList: [self.rollUnder, self.cocos],
-          runTime: 10,
+          runtime: 10,
           onlyGetFee: false
         })
         .then(res => {
