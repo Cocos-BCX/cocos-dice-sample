@@ -5,51 +5,65 @@ import CocosBCX from 'cocosjs-plugin-bcx'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    account: {},
-    BCXWeb: {},
-  },
-  mutations: {
-    UPDATE_ACCOUNT(state, account) {
-      state.account = account
-    },
-    SET_BCX(state, cocos) {
-      state.BCXWeb = cocos
-    },
-  },
-  actions: {
-    async CONNECT_COCOS({
-      state,
-      commit
-    }) {
-      try {
-        if (window.BcxWeb) {
-          bcx = window.BcxWeb
-          commit('UPDATE_ACCOUNT', {
-            name: window.BcxWeb.account_name,
-          })
-          bcx.getAccountInfo().then(res => {
-            commit('UPDATE_ACCOUNT', {
-              name: res.account_name,
-            })
-          })
-          return
-        }
-        Cocosjs.plugins(new CocosBCX())
-        await Cocosjs.cocos.connect('My-App').then(connected => {
-          if (!connected) return false
-          const cocos = Cocosjs.cocos
-          bcx = cocos.cocosBcx(bcx)
-          bcx.getAccountInfo().then(res => {
-            commit('UPDATE_ACCOUNT', {
-              name: res.account_name,
-            })
-            bcx.account_name = res.account_name
-          })
-        })
-      } catch (e) {}
-    },
-  },
+	state: {
+		account: {},
+		cocos: {},
+	},
+	mutations: {
+		UPDATE_ACCOUNT(state, account) {
+			state.account = account
+		},
+		SET_COCOS(state, cocos) {
+			state.cocos = cocos
+		},
+	},
+	actions: {
+		async CONNECT_COCOS({ state, commit }) {
+			try {
+				if (window.BcxWeb) {
+					bcx = window.BcxWeb
+					commit('UPDATE_ACCOUNT', {
+						name: window.BcxWeb.account_name,
+					})
+					bcx.getAccountInfo().then(res => {
+						commit('UPDATE_ACCOUNT', {
+							name: res.account_name,
+						})
+					})
+					return
+				}
+				let timer = null
+				clearInterval(timer)
+				timer = setInterval(() => {
+					console.log('ddad')
+					if (window.BcxWeb) {
+						bcx = window.BcxWeb
+						bcx.getAccountInfo().then(res => {
+							commit('UPDATE_ACCOUNT', {
+								name: res.account_name,
+							})
+						})
+						clearInterval(timer)
+					}
+				}, 1000)
+				Cocosjs.plugins(new CocosBCX())
+				await Cocosjs.cocos.connect('My-App').then(connected => {
+					if (!connected) {
+						return
+					}
+					clearInterval(timer)
+					const cocos = Cocosjs.cocos
+					bcx = cocos.cocosBcx(bcx)
+					bcx.getAccountInfo().then(res => {
+						commit('UPDATE_ACCOUNT', {
+							name: res.account_name,
+						})
+						bcx.account_name = res.account_name
+					})
+				})
+			} catch (e) {}
+		},
+	},
 })
 
 // npm引入 npm install cocosjs - core cocosjs - plugin - bcx--registry = http: //39.105.4.131:8080/ -S

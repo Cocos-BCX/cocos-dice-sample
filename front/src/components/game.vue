@@ -3,7 +3,7 @@
     <div class="form">
       <div class="form-group">
         <div>
-          <label @click="transfer">BET AMOUNT</label>
+          <label>BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">
               <img class="cocos-logo" :src="cocosbcxLogo">
@@ -133,10 +133,10 @@ export default {
     eventHub.$on("SHOW_LOGIN", async () => {
       await this.CONNECT_COCOS();
     });
-    setTimeout(async () => {
-      await this.CONNECT_COCOS();
-      this.getCOCOS();
-    }, 100);
+
+    await this.CONNECT_COCOS();
+    this.getCOCOS();
+
     // this.login();
     eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
   },
@@ -164,7 +164,7 @@ export default {
   },
   methods: {
     ...mapActions(["CONNECT_COCOS"]),
-    ...mapMutations(["UPDATE_ACCOUNT"]),
+    ...mapMutations(["SET_COCOS"]),
     getCOCOS() {
       if (typeof this.account.name !== "string") {
         this.currentCOCOS = 0;
@@ -177,6 +177,9 @@ export default {
         })
         .then(res => {
           this.currentCOCOS = res.data.COCOS;
+          if (res.data.COCOS) {
+            this.SET_COCOS(res.data.COCOS);
+          }
         });
     },
 
@@ -213,19 +216,6 @@ export default {
       return createHash("sha1")
         .update(this.account.name + Date.now() + randomNumber)
         .digest("hex");
-    },
-
-    transfer() {
-      bcx
-        .transferAsset({
-          toAccount: "test2",
-          amount: "2",
-          memo: "",
-          assetId: "COCOS"
-        })
-        .then(res => {
-          console.log(res);
-        });
     },
 
     doAction() {
