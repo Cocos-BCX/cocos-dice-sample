@@ -10,8 +10,8 @@
         <tr>
           <th>Time</th>
           <th>Bettor</th>
-          <th>Roll Under</th>
           <th>Bet</th>
+          <th>Roll Under</th>
           <th>Roll</th>
           <!-- <th>Payout</th> -->
         </tr>
@@ -38,12 +38,9 @@ import { setTimeout } from "timers";
 export default {
   mounted() {
     //注释
-    setTimeout(() => {
-      this.fetchOrders();
-      console.log(this.cocos);
-      
-    }, 2000);
-
+    // setTimeout(() => {
+    //   this.fetchOrders();
+    // }, 2000);
     // setInterval(this.fetchOrders(), 1000);
   },
   computed: {
@@ -53,6 +50,11 @@ export default {
     return {
       orders: []
     };
+  },
+  watch: {
+    cocos(val, old) {
+      this.fetchOrders();
+    }
   },
 
   methods: {
@@ -78,7 +80,6 @@ export default {
               list.push(item);
             }
           });
-          console.log(list);
           this.orders = list;
         }
       });
