@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Cocosjs from 'cocosjs-core'
 import CocosBCX from 'cocosjs-plugin-bcx'
+import {
+  Message
+} from 'element-ui'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -39,8 +42,17 @@ export default new Vuex.Store({
         clearInterval(timer)
         timer = setInterval(() => {
           if (window.BcxWeb) {
+            console.log(window.BcxWeb);
             bcx = window.BcxWeb
             bcx.getAccountInfo().then(res => {
+              if (res.locked) {
+                Message({
+                  duration: 1200,
+                  message: 'Account Locked',
+                  type: 'error'
+                })
+                return
+              }
               commit('UPDATE_ACCOUNT', {
                 name: res.account_name,
               })
