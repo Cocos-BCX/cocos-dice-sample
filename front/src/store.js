@@ -35,7 +35,6 @@ export default new Vuex.Store({
 				let timer = null
 				clearInterval(timer)
 				timer = setInterval(() => {
-					console.log('ddad')
 					if (window.BcxWeb) {
 						bcx = window.BcxWeb
 						bcx.getAccountInfo().then(res => {
