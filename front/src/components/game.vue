@@ -3,6 +3,9 @@
     <div class="form">
       <div class="form-group">
         <div>
+          <div class="block">
+            <!-- <span class="demonstration">隐藏 Tooltip</span> -->
+          </div>
           <label>BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">

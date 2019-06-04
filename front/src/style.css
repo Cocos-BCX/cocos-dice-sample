@@ -1,20 +1,39 @@
 body * {
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 p {
   margin: 0;
 }
 
-ul, ol {
+ul,
+ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
+.el-slider__runway {
+  background-color: #de3162
+}
+
+.el-slider__bar {
+  background-color: #6eed9b;
+  -webkit-box-shadow: 0 0 20px #02f292;
+  box-shadow: 0 0 20px #02f292;
+}
+
+.el-slider__button {
+  border: 1px solid #c5c5c5;
+  background: #f6f6f6;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+
 
 @media screen (max-width: 1024px) {
   body {
     width: 2000px;
   }
 }
-

@@ -1,8 +1,7 @@
 <template>
   <section class="slider-container">
     <div class="slider">
-      <span>1</span>
-      <div ref="slide" @click="slide" class="slider-bg">
+      <!-- <div ref="slide" @click="slide" class="slider-bg">
         <div ref="range" :style="{'right': rangeDistance}" class="slider-range"></div>
         <div :style="{'right': rangeDistance}" ref="tooltip" class="slider-tooltip">{{current}}</div>
         <div
@@ -12,8 +11,12 @@
           ref="handle"
           class="slider-handle"
         ></div>
-      </div>
-      <span>100</span>
+      </div>-->
+    </div>
+    <div class="range">
+      <span>1</span>
+      <el-slider v-model="initial" @change="slide" :show-tooltip="true"></el-slider>
+      <span class="all">100</span>
     </div>
   </section>
 </template>
@@ -37,58 +40,62 @@ export default {
     }
   },
   mounted() {
-    const { offsetWidth } = this.$refs.slide;
-    const { left } = this.$refs.slide.getBoundingClientRect();
-
-    this.left = left;
-    this.slideWidth = offsetWidth;
-
-    document.addEventListener("mousemove", this.drag);
-    document.addEventListener("mouseup", this.dragEnd);
-    document.addEventListener("mouseleave", this.dragEnd);
+    // const { offsetWidth } = this.$refs.slide;
+    // const { left } = this.$refs.slide.getBoundingClientRect();
+    // this.left = left;
+    // this.slideWidth = offsetWidth;
+    // document.addEventListener("mousemove", this.drag);
+    // document.addEventListener("mouseup", this.dragEnd);
+    // document.addEventListener("mouseleave", this.dragEnd);
   },
   data() {
     return {
-      current: this.initial,
       isDraging: false,
       left: 0,
       slideWidth: 0
     };
   },
   computed: {
-    rangeDistance() {
-      return (this.slideWidth - this.offsetX) / 100 + "rem";
-    },
-
-    offsetX() {
-      return (this.current / 100) * this.slideWidth;
-    }
+    // rangeDistance() {
+    //   return (this.slideWidth - this.offsetX) / 100 + "rem";
+    // },
+    // offsetX() {
+    //   return (this.current / 100) * this.slideWidth;
+    // }
   },
   methods: {
-    slide({ offsetX }) {
-      const current = Math.floor((offsetX / this.slideWidth) * 100);
+    slide() {
+      // switch (true) {
+      //   case current < this.min:
+      //     this.current = this.min;
+      //     break;
+      //   case current > this.max:
+      //     this.current = this.max;
+      //     break;
+      //   default:
+      //     this.current = current;
+      // }
       switch (true) {
-        case current < this.min:
-          this.current = this.min;
+        case this.initial < this.min:
+          this.initial = this.min;
           break;
-        case current > this.max:
-          this.current = this.max;
+        case this.initial > this.max:
+          this.initial = this.max;
           break;
-        default:
-          this.current = current;
       }
-      eventHub.$emit("ROLLUNDER_CHANGE", this.current);
-    },
-    drag({ screenX, offsetX, pageX }) {
-      if (!this.isDraging) return;
-      this.slide({ offsetX: screenX - this.left });
-    },
-    dragStart() {
-      this.isDraging = true;
-    },
-    dragEnd() {
-      this.isDraging = false;
+
+      eventHub.$emit("ROLLUNDER_CHANGE", this.initial);
     }
+    // drag({ screenX, offsetX, pageX }) {
+    //   if (!this.isDraging) return;
+    //   this.slide({ offsetX: screenX - this.left });
+    // },
+    // dragStart() {
+    //   this.isDraging = true;
+    // },
+    // dragEnd() {
+    //   this.isDraging = false;
+    // }
   },
   destroyed() {
     document.removeEventListener("mousemove", this.drag);
@@ -99,13 +106,31 @@ export default {
 </script>
 
 <style scoped>
+.range {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+.el-slider {
+  flex: 1;
+  margin-left: 0.15rem;
+}
+.range span {
+  margin: 0 0.07rem 1px;
+}
+.range .all {
+  margin-left: 0.15rem;
+}
+
 .slider-container {
   background-color: #4b484888;
   border-radius: 50px;
-  height: 84px;
+  height: 0.84rem;
   margin: 0 auto;
-  width: 655px;
-  padding: 30px;
+  width: 6.55rem;
+  padding: 0.3rem;
   user-select: none;
 }
 

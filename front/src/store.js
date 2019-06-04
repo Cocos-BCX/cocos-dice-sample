@@ -26,11 +26,14 @@ export default new Vuex.Store({
       commit
     }) {
       try {
+        console.log(window)
         if (window.BcxWeb) {
           bcx = window.BcxWeb
           commit('UPDATE_ACCOUNT', {
             name: window.BcxWeb.account_name,
           })
+          console.log(bcx);
+
           bcx.getAccountInfo().then(res => {
             commit('UPDATE_ACCOUNT', {
               name: res.account_name,
@@ -42,14 +45,13 @@ export default new Vuex.Store({
         clearInterval(timer)
         timer = setInterval(() => {
           if (window.BcxWeb) {
-            console.log(window.BcxWeb);
             bcx = window.BcxWeb
             bcx.getAccountInfo().then(res => {
               if (res.locked) {
                 Message({
                   duration: 1200,
                   message: 'Account Locked',
-                  type: 'error'
+                  type: 'error',
                 })
                 return
               }
