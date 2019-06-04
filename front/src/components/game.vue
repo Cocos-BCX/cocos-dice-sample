@@ -274,7 +274,7 @@ export default {
           onlyGetFee: false
         })
         .then(res => {
-          if (res.code !== 1) {
+          if (res.code != 1) {
             this.$notify({
               title: "Bet Failed",
               message: res.message,
