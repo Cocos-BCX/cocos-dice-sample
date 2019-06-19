@@ -26,10 +26,10 @@ import eventHub from "@/utils/event";
 
 export default {
   props: {
-    initial: {
-      type: Number,
-      default: 50
-    },
+    // initial: {
+    //   type: Number,
+    //   default: 50
+    // },
     max: {
       type: Number,
       default: 100
@@ -37,7 +37,8 @@ export default {
     min: {
       type: Number,
       default: 1
-    }
+    },
+    result: {}
   },
   mounted() {
     // const { offsetWidth } = this.$refs.slide;
@@ -52,7 +53,8 @@ export default {
     return {
       isDraging: false,
       left: 0,
-      slideWidth: 0
+      slideWidth: 0,
+      initial: 50
     };
   },
   computed: {

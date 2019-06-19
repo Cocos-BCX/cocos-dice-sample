@@ -67,7 +67,7 @@
       </footer>
     </div>
 
-    <dice-slider :initial="rollUnder" :max="96" :min="2"/>
+    <dice-slider :max="96" :min="2"/>
     <el-dialog width="30%" :visible.sync="showAbout">
       <p slot="title">How To Play</p>
       <ol>
@@ -283,13 +283,29 @@ export default {
               type: "error"
             });
           } else {
-            this.$notify({
-              title: "Success",
-              message: "trade success",
-              duration: 2000,
-              showClose: false,
-              type: "success"
-            });
+            if (res.data.length) {
+              let list = res.data[0];
+              if (list.contract_affecteds.length === 4) {
+                let coin =
+                  list.contract_affecteds[list.contract_affecteds.length - 1]
+                    .result.aseet_amount;
+                this.$notify({
+                  title: "Success",
+                  message: "You Win " + coin,
+                  duration: 2000,
+                  showClose: false,
+                  type: "success"
+                });
+              } else {
+                this.$notify({
+                  title: "Success",
+                  message: "You Lose",
+                  duration: 2000,
+                  showClose: false,
+                  type: "info"
+                });
+              }
+            }
           }
           self.getCOCOS();
         });
