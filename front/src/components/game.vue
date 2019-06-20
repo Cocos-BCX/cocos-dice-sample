@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     ...mapActions(["CONNECT_COCOS"]),
-    ...mapMutations(["SET_COCOS"]),
+    ...mapMutations(["SET_COCOS", "LOADING"]),
     getCOCOS() {
       if (typeof this.account.name !== "string") {
         this.currentCOCOS = 0;
@@ -220,7 +220,6 @@ export default {
         .update(this.account.name + Date.now() + randomNumber)
         .digest("hex");
     },
-
     doAction() {
       let maxAmount = this.maxBetAmount();
       if (this.cocos > maxAmount) {
@@ -265,6 +264,7 @@ export default {
 
       //nameOrId=>合约名字或ID
       var self = this;
+      this.LOADING(true);
       bcx
         .callContractFunction({
           nameOrId: "contract.dicegame",
@@ -274,7 +274,8 @@ export default {
           onlyGetFee: false
         })
         .then(res => {
-          if (res.code != 1) {
+          if (res.code !== 1) {
+            this.LOADING(false);
             this.$notify({
               title: "Bet Failed",
               message: res.message,
@@ -284,6 +285,7 @@ export default {
             });
           } else {
             if (res.data.length) {
+              this.LOADING(false);
               let list = res.data[0];
               if (list.contract_affecteds.length === 4) {
                 let coin =
@@ -358,10 +360,7 @@ export default {
       return document.querySelector(selector);
     },
     logins() {
-      bcx.getAccountInfo().then(res => {
-        console.log("aaaa");
-        console.log(res);
-      });
+      bcx.getAccountInfo().then(res => {});
     },
 
     login() {},
@@ -558,7 +557,7 @@ export default {
 .info-container ul > li > label {
   color: #9b9fae;
   font-weight: 600;
-  font-size: 0.6em;
+  font-size: 0.12rem;
   margin-bottom: 0.75em;
   display: block;
 }
@@ -817,7 +816,7 @@ export default {
     border-radius: 0.3em;
     margin-right: 30px;
     height: 47px;
-    width: 6rem;
+    width: 6.3rem;
     position: relative;
   }
 
@@ -847,7 +846,7 @@ export default {
   .info-container {
     background-color: #3f3e3e;
     padding: 0.12rem;
-    width: 6rem;
+    width: 6.3rem;
   }
 
   .info-container ul {
@@ -870,7 +869,7 @@ export default {
   .info-container ul > li > label {
     color: #9b9fae;
     font-weight: 600;
-    font-size: 12px !important;
+    font-size: 12px;
     margin-bottom: 0.25rem;
     display: block;
   }
@@ -886,7 +885,7 @@ export default {
     background-color: #3f3e3e;
     border-radius: 0.3em;
     height: 47px;
-    width: 6rem;
+    width: 6.3rem;
     line-height: 47px;
     text-align: center;
     position: relative;

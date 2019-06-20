@@ -23,6 +23,10 @@ ol {
   box-shadow: 0 0 20px #02f292;
 }
 
+.el-loading-mask {
+  background: rgba(78, 71, 71, 0.9)
+}
+
 .el-slider__button {
   border: 1px solid #c5c5c5;
   background: #f6f6f6;

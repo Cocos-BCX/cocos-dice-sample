@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     account: {},
     cocos: 0,
+    loading: false,
   },
   mutations: {
     UPDATE_ACCOUNT(state, account) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     SET_COCOS(state, cocos) {
       state.cocos = cocos
     },
+    LOADING(state, loading) {
+      state.loading = loading
+    }
   },
   actions: {
     async CONNECT_COCOS({

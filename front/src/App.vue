@@ -1,19 +1,22 @@
 <template>
   <main id="app">
     <dice-header/>
-    <dice-game/>
+    <dice-game v-loading="loading"/>
     <dice-orders/>
   </main>
 </template>
 
 <script>
 /* global scatter */
-
+import { mapState } from "vuex";
 export default {
   components: {
     diceHeader: require("@/components/header").default,
     diceGame: require("@/components/game").default,
     diceOrders: require("@/components/orders").default
+  },
+  computed: {
+    ...mapState(["loading"])
   },
   // methods: {
   //   ...mapActions(["CONNECT_COCOS"])
