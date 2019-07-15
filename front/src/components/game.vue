@@ -9,8 +9,8 @@
           <label>BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">
-              <img class="cocos-logo" :src="cocosbcxLogo">
-              <input @change="checkBetamount" v-model="cocos">
+              <img class="cocos-logo" :src="cocosbcxLogo" />
+              <input @change="checkBetamount" v-model="cocos" />
             </div>
             <ul class="amount-rate">
               <li @click="setCOCOS(.5)">1/2</li>
@@ -22,7 +22,7 @@
         <div class="payout">
           <label @click="logins">PAYOUT ON WIN</label>
           <div class="bet-cell">
-            <img class="cocos-logo" :src="cocosbcxLogo">
+            <img class="cocos-logo" :src="cocosbcxLogo" />
             <span>{{payWin}}</span>
           </div>
         </div>
@@ -45,7 +45,7 @@
       </div>
       <footer class="game-footer">
         <div class="currentCOCOS-container">
-          <img class="cocos-logo" :src="cocosbcxLogo">
+          <img class="cocos-logo" :src="cocosbcxLogo" />
           <span
             :class="{
               'animateUp': this.showUpAnimation, 
@@ -61,13 +61,12 @@
           @click="login"
         class="btn-action">LOGIN</button>-->
         <div class="bet-balance">
-          <img class="token-logo" :src="tokenLogo">
+          <img class="token-logo" :src="tokenLogo" />
           <span>0.0000</span>
         </div>
       </footer>
     </div>
-
-    <dice-slider :max="96" :min="2"/>
+    <dice-slider :max="96" :min="2" />
     <el-dialog width="30%" :visible.sync="showAbout">
       <p slot="title">How To Play</p>
       <ol>
@@ -89,13 +88,13 @@
     <el-dialog width="30%" :visible.sync="showLogin">
       <p slot="title">Login Account</p>
       <label>UserName</label>
-      <input type="text" name="user" id="login_username">
-      <br>
-      <br>
+      <input type="text" name="user" id="login_username" />
+      <br />
+      <br />
       <label>Password</label>
-      <input type="text" name="password" id="login_pwd">
-      <br>
-      <br>
+      <input type="text" name="password" id="login_pwd" />
+      <br />
+      <br />
       <button @click="login" class="btn-action">LOGIN</button>
     </el-dialog>
 
@@ -103,16 +102,16 @@
       <p slot="title">Join the COCOS Community</p>
       <ul class="social-links">
         <li @click="navigate('twitter')">
-          <font-awesome-icon :icon="['fab', 'twitter']"/>
+          <font-awesome-icon :icon="['fab', 'twitter']" />
         </li>
         <li @click="navigate('github')">
-          <font-awesome-icon :icon="['fab', 'github']"/>
+          <font-awesome-icon :icon="['fab', 'github']" />
         </li>
         <li @click="navigate('medium')">
-          <font-awesome-icon :icon="['fab', 'medium-m']"/>
+          <font-awesome-icon :icon="['fab', 'medium-m']" />
         </li>
         <li @click="navigate('discord')">
-          <font-awesome-icon :icon="['fab', 'discord']"/>
+          <font-awesome-icon :icon="['fab', 'discord']" />
         </li>
       </ul>
     </el-dialog>
@@ -136,7 +135,27 @@ export default {
     eventHub.$on("SHOW_LOGIN", async () => {
       await this.CONNECT_COCOS();
     });
-
+    bcx
+      .queryAccountNHAssets({
+        account: "test1",
+        pageSize: 10,
+        page: 2
+      })
+      .then(res => {
+        console.log(res);
+        this.nh = res.data;
+      });
+    // bcx
+    //   .queryAccountNHAssetOrders({
+    //     account: "test1",
+    //     pageSize: 10,
+    //     page: 1
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //     this.nh = res.data;
+    //   });
+    //
     await this.CONNECT_COCOS();
     this.getCOCOS();
 
@@ -159,7 +178,8 @@ export default {
       showSocial: false,
       animating: false,
       showUpAnimation: false,
-      showDownAnimation: false
+      showDownAnimation: false,
+      nh: []
     };
   },
   computed: {
@@ -175,11 +195,13 @@ export default {
       }
       bcx
         .queryAccountBalances({
-          assetId: "COCOS",
+          assetId: "",
           account: this.account.name
         })
         .then(res => {
           this.currentCOCOS = res.data.COCOS;
+          console.log(res);
+
           if (res.data.COCOS) {
             this.SET_COCOS(res.data.COCOS);
           }
@@ -261,7 +283,6 @@ export default {
       let referrer = "fairdicegame";
       body.append("roll_under", this.rollUnder);
       body.append("referrer", referrer);
-
       //nameOrId=>合约名字或ID
       var self = this;
       this.LOADING(true);
@@ -274,6 +295,7 @@ export default {
           onlyGetFee: false
         })
         .then(res => {
+          console.log(res);
           if (res.code !== 1) {
             this.LOADING(false);
             this.$notify({

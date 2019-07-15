@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Cocosjs from 'cocosjs-core'
-import CocosBCX from 'cocosjs-plugin-bcx'
+// import Cocosjs from 'cocosjs-core'
+// import CocosBCX from 'cocosjs-plugin-bcx'
 import {
   Message
 } from 'element-ui'
@@ -31,6 +31,8 @@ export default new Vuex.Store({
     }) {
       try {
         console.log(window)
+        console.log(window.CocosBCX);
+        console.log(window.CoreJS);
         if (window.BcxWeb) {
           bcx = window.BcxWeb
           commit('UPDATE_ACCOUNT', {
@@ -66,13 +68,14 @@ export default new Vuex.Store({
             clearInterval(timer)
           }
         }, 1000)
-        Cocosjs.plugins(new CocosBCX())
-        await Cocosjs.cocos.connect('My-App').then(connected => {
+
+        CoreJS.plugins(new CocosBCX())
+        await CoreJS.cocos.connect('My-App').then(connected => {
           if (!connected) {
             return
           }
           clearInterval(timer)
-          const cocos = Cocosjs.cocos
+          const cocos = CoreJS.cocos
           bcx = cocos.cocosBcx(bcx)
           bcx.getAccountInfo().then(res => {
             commit('UPDATE_ACCOUNT', {
