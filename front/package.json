@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
+    "bcxjs-api": "^1.4.33",
     "element-ui": "^2.4.6",
     "get-random-values": "^1.2.0",
     "isomorphic-ws": "^4.0.1",
@@ -24,7 +25,6 @@
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
-    "bcxjs-api": "^1.4.2",
     "cocosjs-core": "^0.2.3",
     "cocosjs-plugin-bcx": "^0.2.2",
     "vue-template-compiler": "^2.5.17"
