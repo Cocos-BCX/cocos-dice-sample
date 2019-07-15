@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import Cocosjs from 'cocosjs-core'
-// import CocosBCX from 'cocosjs-plugin-bcx'
+import Cocosjs from 'cocosjs-core'
+import CocosBCX from 'cocosjs-plugin-bcx'
 import {
   Message
 } from 'element-ui'
@@ -30,9 +30,6 @@ export default new Vuex.Store({
       commit
     }) {
       try {
-        console.log(window)
-        console.log(window.CocosBCX);
-        console.log(window.CoreJS);
         if (window.BcxWeb) {
           bcx = window.BcxWeb
           commit('UPDATE_ACCOUNT', {
