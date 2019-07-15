@@ -31,4 +31,4 @@ yarn run build
 ```
 yarn run lint
 ```
-# Log in to the account via plugin, then you can shake the dice
+## Log in to the account via plugin, then you can shake the dice
