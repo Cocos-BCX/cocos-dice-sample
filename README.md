@@ -1,3 +1,5 @@
+[中文](https://github.com/Cocos-BCX/cocos-dice-sample/blob/master/README_cn.md)
+
 ## cocos-dice:
 A Dice Game For Cocos-BCX
 
