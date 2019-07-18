@@ -4,7 +4,7 @@ A Dice Game For Cocos-BCX
 ## 准备工作:
 ###### 1.下载钱包
 
-下载安装Goole插件钱包 [CocosPay](https://github.com/Cocos-BCX/CocosPay)
+下载安装Google插件钱包 [CocosPay](https://github.com/Cocos-BCX/CocosPay)
 或
 根据系统选择安装桌面版钱包
 [CocosDesktop for Mac](https://cocosbcx.oss-cn-beijing.aliyuncs.com/CocosDesktop.dmg)
