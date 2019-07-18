@@ -118,8 +118,8 @@
   </section>
 </template>
 <script>
-import Cocosjs from "cocosjs-core";
-import CocosBCX from "cocosjs-plugin-bcx";
+// import Cocosjs from "cocosjs-core";
+// import CocosBCX from "cocosjs-plugin-bcx";
 // import BCX from 'bcxjs-api';
 import cocosbcxLogo from "@/assets/cocosbcx.png";
 import tokenLogo from "@/assets/bet-token.png";
