@@ -2,7 +2,7 @@
   <main id="app">
     <dice-header/>
     <dice-game v-loading="loading"/>
-    <dice-orders/>
+    <!-- <dice-orders/> -->
   </main>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   components: {
     diceHeader: require("@/components/header").default,
     diceGame: require("@/components/game").default,
-    diceOrders: require("@/components/orders").default
+    // diceOrders: require("@/components/orders").default
   },
   computed: {
     ...mapState(["loading"])
