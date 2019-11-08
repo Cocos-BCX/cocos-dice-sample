@@ -60,25 +60,8 @@ export default new Vuex.Store({
             clearInterval(timer)
           }
         }, 1000)
-
-        Cocosjs.plugins(new CocosBCX())
-        await Cocosjs.cocos.connect('My-App').then(connected => {
-          if (!connected) {
-            return
-          }
-          clearInterval(timer)
-          const cocos = Cocosjs.cocos
-          bcx = cocos.cocosBcx(bcx)
-          bcx.getAccountInfo().then(res => {
-            commit('UPDATE_ACCOUNT', {
-              name: res.account_name,
-            })
-            // bcx.account_name = res.account_name
-          })
-        })
       } catch (e) {
         console.log(e);
-
       }
     },
   },

@@ -290,9 +290,7 @@ export default {
         .callContractFunction({
           nameOrId: "contract.dicegame",
           functionName: "bet",
-          valueList: [self.rollUnder, self.cocos],
-          runtime: 10,
-          onlyGetFee: false
+          valueList: [self.rollUnder, self.cocos], 
         })
         .then(res => {
           console.log(res);
