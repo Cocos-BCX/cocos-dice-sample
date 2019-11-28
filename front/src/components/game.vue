@@ -135,27 +135,7 @@ export default {
     eventHub.$on("SHOW_LOGIN", async () => {
       await this.CONNECT_COCOS();
     });
-    bcx
-      .queryAccountNHAssets({
-        account: "test1",
-        pageSize: 10,
-        page: 2
-      })
-      .then(res => {
-        console.log(res);
-        this.nh = res.data;
-      });
-    // bcx
-    //   .queryAccountNHAssetOrders({
-    //     account: "test1",
-    //     pageSize: 10,
-    //     page: 1
-    //   })
-    //   .then(res => {
-    //     console.log(res);
-    //     this.nh = res.data;
-    //   });
-    //
+
     await this.CONNECT_COCOS();
     this.getCOCOS();
 
@@ -199,11 +179,12 @@ export default {
           account: this.account.name
         })
         .then(res => {
+          console.log("---queryAccountBalances--",res);
+          if(res.code == 1){
           this.currentCOCOS = res.data.COCOS;
-          console.log(res);
-
           if (res.data.COCOS) {
             this.SET_COCOS(res.data.COCOS);
+          }
           }
         });
     },
