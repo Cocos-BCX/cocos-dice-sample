@@ -309,9 +309,10 @@ export default {
                 });
               }
             }
-          }
           self.getCOCOS();
+          }
         });
+        self.getCOCOS();
     },
 
     fetchResult(hash) {
