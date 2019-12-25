@@ -32,10 +32,6 @@ import diceLogo from "@/assets/dice.svg";
 
 export default {
   methods: {
-    login() {},
-
-    logout() {},
-
     showAbout() {
       eventHub.$emit("SHOW_ABOUT");
     },

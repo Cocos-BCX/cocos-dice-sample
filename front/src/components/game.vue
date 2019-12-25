@@ -124,23 +124,23 @@
 import cocosbcxLogo from "@/assets/cocosbcx.png";
 import tokenLogo from "@/assets/bet-token.png";
 import eventHub from "@/utils/event";
-import fetch from "@/utils/api";
+// import fetch from "@/utils/api";
 import createHash from "create-hash";
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   created() {},
   async mounted() {
     eventHub.$on("ROLLUNDER_CHANGE", rollUnder => (this.rollUnder = rollUnder));
-    eventHub.$on("SHOW_ABOUT", () => (this.showAbout = true));
-    eventHub.$on("SHOW_LOGIN", async () => {
-      await this.CONNECT_COCOS();
-    });
+    // eventHub.$on("SHOW_ABOUT", () => (this.showAbout = true));
+    // eventHub.$on("SHOW_LOGIN", async () => {
+    //   await this.CONNECT_COCOS();
+    // });
 
     await this.CONNECT_COCOS();
     this.getCOCOS();
 
     // this.login();
-    eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
+    // eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
   },
   data() {
     return {
@@ -173,7 +173,7 @@ export default {
         this.currentCOCOS = 0;
         return;
       }
-      bcx
+      this.$store.state.bcx
         .queryAccountBalances({
           assetId: "",
           account: this.account.name
@@ -267,7 +267,7 @@ export default {
       //nameOrId=>合约名字或ID
       var self = this;
       this.LOADING(true);
-      bcx
+        this.$store.state.bcx
         .callContractFunction({
           nameOrId: "contract.dicegame",
           functionName: "bet",
@@ -362,7 +362,7 @@ export default {
       return document.querySelector(selector);
     },
     logins() {
-      bcx.getAccountInfo().then(res => {});
+        this.$store.state.bcx.getAccountInfo().then(res => {});
     },
 
     login() {},
