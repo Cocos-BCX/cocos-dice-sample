@@ -18,6 +18,9 @@ export default new Vuex.Store({
     UPDATE_ACCOUNT(state, account) {
       state.account = account
     },
+    SET_BCX(state, bcx) {
+      state.bcx = bcx
+    },
     SET_COCOS(state, cocos) {
       state.cocos = cocos
     },
@@ -52,9 +55,8 @@ export default new Vuex.Store({
                 check_cached_nodes_data: false
               };
               window.BcxWeb.bcx = new BCX(_configParams);
-              state.bcx = window.BcxWeb
-              console.log("---initConnect--success", state.bcx);
-              state.bcx.getAccountInfo().then(res => {
+              commit('SET_BCX', window.BcxWeb)
+              window.BcxWeb.getAccountInfo().then(res => {
                 if (res.locked) {
                   Message({
                     duration: 1200,
@@ -70,8 +72,8 @@ export default new Vuex.Store({
               })
               clearInterval(timer)
             }).catch(error => {
-              console.log('initConnect error', error);
               commit('LOADING', false)
+              clearInterval(timer)
               Message({
                 duration: 1200,
                 message: 'connect failed',
@@ -81,8 +83,8 @@ export default new Vuex.Store({
           }
         }, 1000)
       } catch (error) {
-        console.log('initConnect error', error);
         commit('LOADING', false)
+        clearInterval(timer)
         Message({
           duration: 1200,
           message: 'connect failed',
