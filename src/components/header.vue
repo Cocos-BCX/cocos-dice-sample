@@ -1,25 +1,16 @@
 <template>
   <header class="header">
     <div>
-      <img class="dice-logo" :src="diceLogo">
+      <img class="dice-logo" :src="diceLogo" />
       <a href="JavaScript:;">COMMUNITIY</a>
     </div>
     <nav>
       <ul>
-        <!-- <li>
-          <a @click="showAbout" href="JavaScript:;">HOW TO PLAY</a>
-        </li>-->
         <li v-if="!account.name">
-          <a @click="showLogin" href="JavaScript:;">LOGIN</a>
+          <!-- <a @click="refresh" href="JavaScript:;">LOGIN</a> -->
+          <img class="refresh-logo" :src="refreshIcon" alt />
         </li>
         <li v-if="account">{{account.name}}</li>
-        <!-- <li>
-          <a @click="showAbout" v-if="!account.name" href="JavaScript:;">LOGIN</a>
-           <div class="account-cell" v-else href="JavaScript:;">
-             <span>{{account.name}}</span>
-             <font-awesome-icon class="icon-logout" @click="logout" icon="sign-out-alt"/>
-           </div>
-        </li>-->
       </ul>
     </nav>
   </header>
@@ -29,25 +20,19 @@
  <script>
 import eventHub from "@/utils/event";
 import diceLogo from "@/assets/dice.svg";
+import refreshIcon from "@/assets/refresh.png";
 
 export default {
   methods: {
-    showAbout() {
-      eventHub.$emit("SHOW_ABOUT");
-    },
-
-    showLogin() {
-      eventHub.$emit("SHOW_LOGIN");
-    },
-
-    showSocial() {
-      eventHub.$emit("SHOW_SOCIAL");
+    refresh() {
+      eventHub.$emit("REFRESH", "REFRESH");
     }
   },
 
   data() {
     return {
-      diceLogo
+      diceLogo,
+      refreshIcon
     };
   },
 
@@ -55,8 +40,7 @@ export default {
     account() {
       return this.$store.state.account;
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 
@@ -111,6 +95,13 @@ export default {
   vertical-align: middle;
   margin-right: 30px;
 }
+
+.refresh-logo {
+  vertical-align: middle;
+  width: 26px;
+  margin-left: 6px;
+}
+
 @media screen and (max-width: 720px) {
   .header {
     width: 100%;

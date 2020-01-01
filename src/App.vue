@@ -1,7 +1,7 @@
 <template>
   <main id="app">
-    <dice-header/>
-    <dice-game v-loading="loading"/>
+    <dice-header />
+    <dice-game v-loading="loading" />
   </main>
 </template>
 
@@ -10,11 +10,11 @@ import { mapState } from "vuex";
 export default {
   components: {
     diceHeader: require("@/components/header").default,
-    diceGame: require("@/components/game").default,
+    diceGame: require("@/components/game").default
   },
   computed: {
     ...mapState(["loading"])
-  },
+  }
 };
 </script>
 

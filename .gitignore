@@ -1,18 +1,5 @@
-# IDE
-.vscode
-.idea
-
-# dependencies
-node_modules
-
-# logs
-npm-debug.log
-yarn-error.log
+node_modules/*
+dist/*
+package-lock.json
 yarn.lock
 
-# Backpack build
-build
-release
-
-# pack
-package-lock.json

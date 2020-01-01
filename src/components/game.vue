@@ -3,14 +3,12 @@
     <div class="form">
       <div class="form-group">
         <div>
-          <div class="block">
-            <!-- <span class="demonstration">隐藏 Tooltip</span> -->
-          </div>
+          <div class="block"></div>
           <label>BET AMOUNT</label>
           <div class="input-amount-group">
             <div class="input-group">
               <img class="cocos-logo" :src="cocosbcxLogo" />
-              <input @change="checkBetamount" v-model="cocos" />
+              <input v-model="cocos" />
             </div>
             <ul class="amount-rate">
               <li @click="setCOCOS(.5)">1/2</li>
@@ -67,7 +65,7 @@
       </footer>
     </div>
     <dice-slider :max="96" :min="2" />
-    <el-dialog width="30%" :visible.sync="showAbout">
+    <!-- <el-dialog width="30%" :visible.sync="showAbout">
       <p slot="title">How To Play</p>
       <ol>
         <li>1. Make sure you have an COCOS account. For more information on how to create one,</li>
@@ -80,12 +78,12 @@
         </li>
         <li>3. Set your BET AMOUNT. This is the amount of Cocos you will be wagering.</li>
         <li>4. Adjust the slider to change your chance of winning.</li>
-        <!-- <li>5. Click ROLL DICE to place your bet.</li> -->
-        <li>5. If your number is lower than your ROLL UNDER TO WIN number, you win!</li>
-        <!-- <li>7. If you get a notice that your transaction failed, please check that you have enough CPU & bandwidth to make the transaction! Please use to make any changes to your account!</li> -->
+        <li>5. Click ROLL DICE to place your bet.</li>
+        <li>6. If your number is lower than your ROLL UNDER TO WIN number, you win!</li>
+        <li>7. If you get a notice that your transaction failed, please check that you have enough CPU & bandwidth to make the transaction! Please use to make any changes to your account!</li>
       </ol>
-    </el-dialog>
-    <el-dialog width="30%" :visible.sync="showLogin">
+    </el-dialog>-->
+    <!-- <el-dialog width="30%" :visible.sync="showLogin">
       <p slot="title">Login Account</p>
       <label>UserName</label>
       <input type="text" name="user" id="login_username" />
@@ -95,10 +93,10 @@
       <input type="text" name="password" id="login_pwd" />
       <br />
       <br />
-      <button @click="login" class="btn-action">LOGIN</button>
-    </el-dialog>
+      <button @click="getCOCOS" class="btn-action">Refresh</button>
+    </el-dialog>-->
 
-    <el-dialog :visible.sync="showSocial">
+    <!-- <el-dialog :visible.sync="showSocial">
       <p slot="title">Join the COCOS Community</p>
       <ul class="social-links">
         <li @click="navigate('twitter')">
@@ -114,33 +112,27 @@
           <font-awesome-icon :icon="['fab', 'discord']" />
         </li>
       </ul>
-    </el-dialog>
+    </el-dialog>-->
   </section>
 </template>
 <script>
-// import Cocosjs from "cocosjs-core";
-// import CocosBCX from "cocosjs-plugin-bcx";
-// import BCX from 'bcxjs-api';
 import cocosbcxLogo from "@/assets/cocosbcx.png";
 import tokenLogo from "@/assets/bet-token.png";
 import eventHub from "@/utils/event";
-// import fetch from "@/utils/api";
 import createHash from "create-hash";
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   created() {},
   async mounted() {
     eventHub.$on("ROLLUNDER_CHANGE", rollUnder => (this.rollUnder = rollUnder));
-    // eventHub.$on("SHOW_ABOUT", () => (this.showAbout = true));
-    // eventHub.$on("SHOW_LOGIN", async () => {
-    //   await this.CONNECT_COCOS();
-    // });
-
-    await this.CONNECT_COCOS();
+    eventHub.$on("REFRESH", REFRESH => {
+      this.CONNECT_COCOS();
+    });
+    eventHub.$on("GET_COCOS", GET_COCOS => {
+      this.getCOCOS();
+    });
+    this.CONNECT_COCOS();
     this.getCOCOS();
-
-    // this.login();
-    // eventHub.$on("SHOW_SOCIAL", () => (this.showSocial = true));
   },
   data() {
     return {
@@ -149,13 +141,9 @@ export default {
       cocos: 1,
       rollUnder: 50,
       currentCOCOS: 0,
-      poolBalance: 0,
       timer: 0,
       animationTxt: 0,
       actionTxt: "ROLL DICE",
-      showAbout: false,
-      showLogin: false,
-      showSocial: false,
       animating: false,
       showUpAnimation: false,
       showDownAnimation: false,
@@ -179,12 +167,12 @@ export default {
           account: this.account.name
         })
         .then(res => {
-          console.log("---queryAccountBalances--",res);
-          if(res.code == 1){
-          this.currentCOCOS = res.data.COCOS;
-          if (res.data.COCOS) {
-            this.SET_COCOS(res.data.COCOS);
-          }
+          console.log("---queryAccountBalances--", res);
+          if (res.code == 1) {
+            this.currentCOCOS = res.data.COCOS;
+            if (res.data.COCOS) {
+              this.SET_COCOS(res.data.COCOS);
+            }
           }
         });
     },
@@ -195,11 +183,10 @@ export default {
 
     maxBetAmount() {
       return 10000;
-      //return this.floor(this.poolBalance / 100 / (98 / this.winChance) * 0.9, 4);
     },
 
     setCOCOS(rate) {
-      const { poolBalance, currentCOCOS } = this;
+      const { currentCOCOS } = this;
       let cocos = rate ? this.cocos * rate : this.currentCOCOS;
       switch (true) {
         case cocos < 0.1:
@@ -252,26 +239,14 @@ export default {
         });
         return;
       }
-      const body = new FormData();
-      const options = {
-        authorization: `${this.account.name}@${this.account.name.authority}`,
-        broadcast: true,
-        sign: true
-      };
-
-      this.showCOCOSAnimation = true;
       this.$message.info("Waiting for node to confirm transfer...");
-      let referrer = "fairdicegame";
-      body.append("roll_under", this.rollUnder);
-      body.append("referrer", referrer);
-      //nameOrId=>合约名字或ID
       var self = this;
       this.LOADING(true);
-        this.$store.state.bcx
+      this.$store.state.bcx
         .callContractFunction({
           nameOrId: "contract.dicegame",
           functionName: "bet",
-          valueList: [self.rollUnder, self.cocos], 
+          valueList: [self.rollUnder, self.cocos]
         })
         .then(res => {
           console.log(res);
@@ -309,86 +284,34 @@ export default {
                 });
               }
             }
-          self.getCOCOS();
+            self.getCOCOS();
           }
         });
-        self.getCOCOS();
+      self.getCOCOS();
     },
 
-    fetchResult(hash) {
-      api.getActions("fairdicelogs", -1, -20).then(({ actions }) => {
-        const result = actions.find(
-          action =>
-            action.action_trace &&
-            action.action_trace.act &&
-            action.action_trace.act.account === "fairdicelogs" &&
-            action.action_trace.act.name === "result" &&
-            action.action_trace.act.data &&
-            action.action_trace.act.data.result &&
-            action.action_trace.act.data.result.seed_hash === hash
-        );
-
-        if (!result) return this.fetchResult(hash);
-
-        const {
-          action_trace: {
-            act: {
-              data: {
-                result: { amount, payout }
-              }
-            }
-          }
-        } = result;
-
-        if (payout === "0.0000 COCOS") {
-          this.showDownAnimation = true;
-          this.animationTxt = amount;
-        } else {
-          this.showUpAnimation = true;
-          this.animationTxt = payout;
-        }
-
-        setTimeout(() => {
-          this.showDownAnimation = false;
-          this.showUpAnimation = false;
-        }, 3100);
-
-        this.animating = false;
-        this.getCOCOS();
-      });
-    },
-
-    gel(selector) {
-      return document.querySelector(selector);
-    },
     logins() {
-        this.$store.state.bcx.getAccountInfo().then(res => {});
-    },
-
-    login() {},
-
-    logout() {},
-
-    checkBetamount() {},
-
-    navigate(brand) {
-      switch (brand) {
-        case "twitter":
-          window.open("//twitter.com/dappPub");
-          break;
-        case "medium":
-          window.open("//medium.com/dapppub");
-          break;
-        case "github":
-          window.open("//github.com/dappub");
-          break;
-        case "discord":
-          window.open(
-            "//discordapp.com/channels/482077322070196225/487187255065313292"
-          );
-          break;
-      }
+      this.$store.state.bcx.getAccountInfo().then(res => {});
     }
+
+    // navigate(brand) {
+    //   switch (brand) {
+    //     case "twitter":
+    //       window.open("//twitter.com/dappPub");
+    //       break;
+    //     case "medium":
+    //       window.open("//medium.com/dapppub");
+    //       break;
+    //     case "github":
+    //       window.open("//github.com/dappub");
+    //       break;
+    //     case "discord":
+    //       window.open(
+    //         "//discordapp.com/channels/482077322070196225/487187255065313292"
+    //       );
+    //       break;
+    //   }
+    // }
   },
 
   watch: {

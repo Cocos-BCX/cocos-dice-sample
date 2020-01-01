@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import Cocosjs from 'cocosjs-core'
-// import CocosBCX from 'cocosjs-plugin-bcx'
+import eventHub from "@/utils/event";
 import {
   Message
 } from 'element-ui'
@@ -32,43 +31,12 @@ export default new Vuex.Store({
       commit
     }) {
       try {
-        if (window.BcxWeb) {
-          state.bcx = window.BcxWeb
-          state.bcx.initConnect().then(async res => {
-            console.log('initConnect--web---configParams ', res.ws);
-            var _configParams = {
-              ws_node_list: [{
-                url: res.ws,
-                name: res.name
-              }],
-              faucet_url: res.faucetUrl,
-              networks: [{
-                core_asset: res.coreAsset,
-                chain_id: res.chainId
-              }],
-              auto_reconnect: true,
-              real_sub: true,
-              check_cached_nodes_data: false
-            };
-            state.bcx = new BCX(_configParams);
-            state.bcx = window.BcxWeb
-            state.bcx.getAccountInfo().then(res => {
-              commit('UPDATE_ACCOUNT', {
-                name: res.account_name,
-              })
-            })
-          }).catch(error => {
-            console.log('initConnect error', error);
-          });
-          return
-        }
+        commit('LOADING', true)
         let timer = null
         clearInterval(timer)
         timer = setInterval(() => {
           if (window.BcxWeb) {
-            state.bcx = window.BcxWeb
-            state.bcx.initConnect().then(async res => {
-              console.log('initConnect-----configParams ', res.ws);
+            window.BcxWeb.initConnect().then(async res => {
               var _configParams = {
                 ws_node_list: [{
                   url: res.ws,
@@ -83,8 +51,9 @@ export default new Vuex.Store({
                 real_sub: true,
                 check_cached_nodes_data: false
               };
-              state.bcx = new BCX(_configParams);
+              window.BcxWeb.bcx = new BCX(_configParams);
               state.bcx = window.BcxWeb
+              console.log("---initConnect--success", state.bcx);
               state.bcx.getAccountInfo().then(res => {
                 if (res.locked) {
                   Message({
@@ -97,27 +66,29 @@ export default new Vuex.Store({
                 commit('UPDATE_ACCOUNT', {
                   name: res.account_name,
                 })
+                commit('LOADING', false)
               })
               clearInterval(timer)
             }).catch(error => {
               console.log('initConnect error', error);
+              commit('LOADING', false)
+              Message({
+                duration: 1200,
+                message: 'connect failed',
+                type: 'error',
+              })
             });
           }
         }, 1000)
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log('initConnect error', error);
+        commit('LOADING', false)
+        Message({
+          duration: 1200,
+          message: 'connect failed',
+          type: 'error',
+        })
       }
     },
   },
 })
-
-// npm引入 npm install cocosjs - core cocosjs - plugin - bcx--registry = http: //39.105.4.131:8080/ -S
-//   js 文件 使用
-// import Cocosjs from "cocosjs-core";
-// import CocosBCX from "cocosjs-plugin-bcx";
-// Cocosjs.plugins(new CocosBCX())
-// Cocosjs.cocos.connect("My-App").then(connected => {
-//   if (!connected) return false;
-//   const cocos = Cocosjs.cocos
-//   window.CocosWeb = cocos
-// })

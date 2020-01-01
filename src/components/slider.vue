@@ -40,15 +40,6 @@ export default {
     },
     result: {}
   },
-  mounted() {
-    // const { offsetWidth } = this.$refs.slide;
-    // const { left } = this.$refs.slide.getBoundingClientRect();
-    // this.left = left;
-    // this.slideWidth = offsetWidth;
-    // document.addEventListener("mousemove", this.drag);
-    // document.addEventListener("mouseup", this.dragEnd);
-    // document.addEventListener("mouseleave", this.dragEnd);
-  },
   data() {
     return {
       isDraging: false,
@@ -57,26 +48,9 @@ export default {
       initial: 50
     };
   },
-  computed: {
-    // rangeDistance() {
-    //   return (this.slideWidth - this.offsetX) / 100 + "rem";
-    // },
-    // offsetX() {
-    //   return (this.current / 100) * this.slideWidth;
-    // }
-  },
+
   methods: {
     slide() {
-      // switch (true) {
-      //   case current < this.min:
-      //     this.current = this.min;
-      //     break;
-      //   case current > this.max:
-      //     this.current = this.max;
-      //     break;
-      //   default:
-      //     this.current = current;
-      // }
       switch (true) {
         case this.initial < this.min:
           this.initial = this.min;
@@ -85,19 +59,8 @@ export default {
           this.initial = this.max;
           break;
       }
-
       eventHub.$emit("ROLLUNDER_CHANGE", this.initial);
     }
-    // drag({ screenX, offsetX, pageX }) {
-    //   if (!this.isDraging) return;
-    //   this.slide({ offsetX: screenX - this.left });
-    // },
-    // dragStart() {
-    //   this.isDraging = true;
-    // },
-    // dragEnd() {
-    //   this.isDraging = false;
-    // }
   },
   destroyed() {
     document.removeEventListener("mousemove", this.drag);

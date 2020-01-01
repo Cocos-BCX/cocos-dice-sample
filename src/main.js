@@ -19,10 +19,9 @@ import 'element-ui/lib/theme-chalk/dialog.css';
 import 'element-ui/lib/theme-chalk/alert.css';
 import 'element-ui/lib/theme-chalk/message.css';
 import 'element-ui/lib/theme-chalk/notification.css';
-import './style.css';
+import './css/style.css';
 
 library.add(faSignOutAlt, brands);
-
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false

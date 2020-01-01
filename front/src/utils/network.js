@@ -1,1 +1,0 @@
-const url = new URL(location.href);
