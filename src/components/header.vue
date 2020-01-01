@@ -8,7 +8,7 @@
       <ul>
         <li v-if="!account.name">
           <!-- <a @click="refresh" href="JavaScript:;">LOGIN</a> -->
-          <img class="refresh-logo" :src="refreshIcon" alt />
+          <img class="refresh-logo" :src="refreshIcon" @click="refresh" />
         </li>
         <li v-if="account">{{account.name}}</li>
       </ul>
