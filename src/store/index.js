@@ -39,47 +39,22 @@ export default new Vuex.Store({
         clearInterval(timer)
         timer = setInterval(() => {
           if (window.BcxWeb) {
-            window.BcxWeb.initConnect().then(async res => {
-              var _configParams = {
-                ws_node_list: [{
-                  url: res.ws,
-                  name: res.name
-                }],
-                faucet_url: res.faucetUrl,
-                networks: [{
-                  core_asset: res.coreAsset,
-                  chain_id: res.chainId
-                }],
-                auto_reconnect: true,
-                real_sub: true,
-                check_cached_nodes_data: false
-              };
-              window.BcxWeb.bcx = new BCX(_configParams);
-              commit('SET_BCX', window.BcxWeb)
-              window.BcxWeb.getAccountInfo().then(res => {
-                if (res.locked) {
-                  Message({
-                    duration: 1200,
-                    message: 'Account Locked',
-                    type: 'error',
-                  })
-                  return
-                }
-                commit('UPDATE_ACCOUNT', {
-                  name: res.account_name,
+            commit('SET_BCX', window.BcxWeb)
+            window.BcxWeb.getAccountInfo().then(res => {
+              if (res.locked) {
+                Message({
+                  duration: 1200,
+                  message: 'Account Locked',
+                  type: 'error',
                 })
-                commit('LOADING', false)
+                return
+              }
+              commit('UPDATE_ACCOUNT', {
+                name: res.account_name,
               })
-              clearInterval(timer)
-            }).catch(error => {
               commit('LOADING', false)
-              clearInterval(timer)
-              Message({
-                duration: 1200,
-                message: 'connect failed',
-                type: 'error',
-              })
-            });
+            })
+            clearInterval(timer)
           }
         }, 1000)
       } catch (error) {
